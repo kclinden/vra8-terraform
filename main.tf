@@ -6,7 +6,7 @@ provider "vra" {
 
 data "vra_region" "this" {
   cloud_account_id = vra_cloud_account_vsphere.vcsa.id
-  region = var.region
+  region           = var.region
 }
 
 resource "vra_cloud_account_vsphere" "vcsa" {
@@ -16,7 +16,7 @@ resource "vra_cloud_account_vsphere" "vcsa" {
   password    = var.password
   hostname    = var.hostname
   regions     = [var.region]
-  #regions                 = data.vra_region_enumeration.dc_regions.regions
+  #regions    = data.vra_region_enumeration.dc_regions.regions
   accept_self_signed_cert = true
 
   tags {
@@ -26,8 +26,8 @@ resource "vra_cloud_account_vsphere" "vcsa" {
 }
 
 resource "vra_zone" "onecloud_zone" {
-  name       = "OneCloud Zone"
-  region_id  = data.vra_region.this.id
+  name      = "OneCloud Zone"
+  region_id = data.vra_region.this.id
 }
 
 resource "vra_project" "OneCloud_Project" {
