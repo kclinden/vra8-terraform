@@ -9,20 +9,13 @@ data "vra_region" "this" {
   region = var.region
 }
 
-# data "vra_region_enumeration" "dc_regions" {
-#   username = var.username
-#   password = var.password
-#   hostname = var.hostname
-#   dcid     = ""
-# }
-
 resource "vra_cloud_account_vsphere" "vcsa" {
   name        = "vcsa-01a.corp.local"
   description = "OneCloud VCSA"
   username    = var.username
   password    = var.password
   hostname    = var.hostname
-  regions     = ["Datacenter:datacenter-141"]
+  regions     = [var.region]
   #regions                 = data.vra_region_enumeration.dc_regions.regions
   accept_self_signed_cert = true
 
