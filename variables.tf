@@ -2,7 +2,7 @@ variable "refresh_token" {
 }
 
 variable "url" {
-    default = "vra.corp.local"
+  default = "vra.corp.local"
 }
 
 variable "insecure" {
@@ -18,6 +18,6 @@ variable "password" {
 variable "hostname" {
 }
 
-#variable "datacollector" {
-#}
+variable "region" {
+}
 

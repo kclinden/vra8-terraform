@@ -4,12 +4,17 @@ provider "vra" {
   insecure      = var.insecure // false for vRA Cloud and true for vRA 8.0
 }
 
-data "vra_region_enumeration" "dc_regions" {
-  username = var.username
-  password = var.password
-  hostname = var.hostname
-  dcid     = ""
+data "vra_region" "this" {
+  cloud_account_id = vra_cloud_account_vsphere.vcsa.id
+  region = var.region
 }
+
+# data "vra_region_enumeration" "dc_regions" {
+#   username = var.username
+#   password = var.password
+#   hostname = var.hostname
+#   dcid     = ""
+# }
 
 resource "vra_cloud_account_vsphere" "vcsa" {
   name        = "vcsa-01a.corp.local"
@@ -26,3 +31,19 @@ resource "vra_cloud_account_vsphere" "vcsa" {
     value = "vsphere"
   }
 }
+
+resource "vra_zone" "onecloud_zone" {
+  name       = "OneCloud Zone"
+  region_id  = data.vra_region.this.id
+}
+
+resource "vra_project" "OneCloud_Project" {
+  name        = "OneCloud Project"
+  description = "OneCloud Project"
+  depends_on  = [vra_zone.onecloud_zone]
+
+  zone_assignments {
+    zone_id  = vra_zone.onecloud_zone.id
+    priority = 1
+  }
+} 
