@@ -40,3 +40,27 @@ resource "vra_project" "OneCloud_Project" {
     priority = 1
   }
 } 
+
+resource "vra_flavor_profile" "this" {
+  name        = "vsphere-flavor-profile"
+  description = "Created by vRA provider for Terraform."
+  region_id   = data.vra_region.this.id
+
+  flavor_mapping {
+    name      = "small"
+    cpu_count = 1
+    memory    = 1024
+  }
+
+  flavor_mapping {
+    name      = "medium"
+    cpu_count = 2
+    memory    = 2048
+  }
+
+  flavor_mapping {
+    name      = "large"
+    cpu_count = 4
+    memory    = 4096
+  }
+}
